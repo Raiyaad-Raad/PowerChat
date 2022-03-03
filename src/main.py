@@ -86,4 +86,4 @@ async def help(ctx):
 
 
 
-bot.run("OTQ4NTY0MjAxMzgxNzI0MTYw.Yh9pQQ.bTfDDDaQDA0YY5jwHw_BkbBn-y4")
+bot.run(os.environ['login'])
