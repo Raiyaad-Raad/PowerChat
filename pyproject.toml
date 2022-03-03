@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "repl_python3_discordpy-chatbot-AI"
+version = "0.1.0"
+description = ""
+authors = ["raiyaadraad <<>>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+chatbot-py = "^2.74"
+discord = "^1.7.3"
+wikipedia = "^1.4.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
