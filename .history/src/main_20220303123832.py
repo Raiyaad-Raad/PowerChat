@@ -1,16 +1,16 @@
-from importlib.resources import contents
-from urllib import response
+#First we import some functions
 import discord
 from discord.ext import commands
 import wikipedia,os
 from chatbot import Chat, register_call
 
-
+# You can put any prefix
 prefix = "-"
 
 bot = commands.Bot(command_prefix = prefix)
 bot.remove_command(name="help")
 
+#This code is for the AI
 @register_call("whoIs") 
 def who_is(query, session_id="general"):
     try:
@@ -23,20 +23,22 @@ def who_is(query, session_id="general"):
                 pass
     return "I don't know about "+query
 
+#This code is for the file of the AI, is very important
+template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
+
+chat=Chat(template_file_path)
+
+#This will say you in the shell when the bot is ready. This code is optional
 @bot.event
 async def on_ready():
-    await bot.change_presence(status=discord.Status.idle, activity=discord.Game("ChatBot :). Watching PowerSummit"))
     print("Bot is ready!")
 
 
 @bot.command()  
 async def chat(ctx, *, message):
-    template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
-
-    chat=Chat(template_file_path)
-
     result = chat.respond(message)
     if(len(result)<=2048):
+        # embed=discord.Embed(title="ChatBot AI", description = result, color = (0xF48D1))
         await ctx.reply(content=result)
     else:
         embedList = []
@@ -51,8 +53,6 @@ async def chat(ctx, *, message):
                 embed = discord.Embed(description = item, color = (0xF48D1))
                 embed.set_footer(text = "Page {}".format(num))
                 await ctx.send(embed = embed)
-
-
 @bot.command()  
 async def ping(ctx):
   embed = discord.Embed(
@@ -86,4 +86,4 @@ async def help(ctx):
 
 
 
-bot.run("OTQ4NTY0MjAxMzgxNzI0MTYw.Yh9pQQ.bTfDDDaQDA0YY5jwHw_BkbBn-y4")
+bot.run(os.environ['login'])

@@ -1,10 +1,8 @@
-from importlib.resources import contents
-from urllib import response
+#First we import some functions
 import discord
 from discord.ext import commands
 import wikipedia,os
 from chatbot import Chat, register_call
-
 
 prefix = "-"
 
@@ -23,6 +21,10 @@ def who_is(query, session_id="general"):
                 pass
     return "I don't know about "+query
 
+template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
+
+chat=Chat(template_file_path)
+
 @bot.event
 async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("ChatBot :). Watching PowerSummit"))
@@ -31,10 +33,6 @@ async def on_ready():
 
 @bot.command()  
 async def chat(ctx, *, message):
-    template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
-
-    chat=Chat(template_file_path)
-
     result = chat.respond(message)
     if(len(result)<=2048):
         await ctx.reply(content=result)

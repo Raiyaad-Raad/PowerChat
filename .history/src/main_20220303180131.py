@@ -31,6 +31,7 @@ async def on_ready():
 
 @bot.command()  
 async def chat(ctx, *, message):
+    ctx.send("ee")
     template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
 
     chat=Chat(template_file_path)

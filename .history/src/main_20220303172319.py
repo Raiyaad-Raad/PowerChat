@@ -1,15 +1,13 @@
-from importlib.resources import contents
-from urllib import response
+#First we import some functions
 import discord
 from discord.ext import commands
 import wikipedia,os
 from chatbot import Chat, register_call
 
-
 prefix = "-"
 
 bot = commands.Bot(command_prefix = prefix)
-bot.remove_command(name="help")
+# bot.remove_command(name="help")
 
 @register_call("whoIs") 
 def who_is(query, session_id="general"):
@@ -23,6 +21,10 @@ def who_is(query, session_id="general"):
                 pass
     return "I don't know about "+query
 
+template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
+
+chat=Chat(template_file_path)
+
 @bot.event
 async def on_ready():
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("ChatBot :). Watching PowerSummit"))
@@ -31,10 +33,6 @@ async def on_ready():
 
 @bot.command()  
 async def chat(ctx, *, message):
-    template_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"chatbotTemplate","chatbottemplate.template")
-
-    chat=Chat(template_file_path)
-
     result = chat.respond(message)
     if(len(result)<=2048):
         await ctx.reply(content=result)
@@ -64,20 +62,20 @@ async def ping(ctx):
 
   await ctx.send(embed=embed)
   
-@bot.command()  
-async def help(ctx):
-  embed = discord.Embed(
-    author = ctx.message.author,
-    title = "helper",
-    description = f"hello! My commands in the field! BTW my prefix is **-** and wherever you see this bracket ***<*** this means you need to define it like -chat <message> and here you do is *-chat hi* the bot will response you like a human and you can continue the commmunication :)",
-    color = (0xF48D1)
-  )
+# @bot.command()  
+# async def help(ctx):
+#   embed = discord.Embed(
+#     author = ctx.message.author,
+#     title = "helper",
+#     description = f"hello! My commands in the field! BTW my prefix is **-** and wherever you see this bracket ***<*** this means you need to define it like -chat <message> and here you do is *-chat hi* the bot will response you like a human and you can continue the commmunication :)",
+#     color = (0xF48D1)
+#   )
 
-  embed.add_field(name="ping", value="See my ping!", inline=True)
-  embed.add_field(name="chat <message>", value="Oh Cmon Dude! Chat With Me!", inline=True)
-  embed.set_footer(text=ctx.message.author)
+#   embed.add_field(name="ping", value="See my ping!", inline=True)
+#   embed.add_field(name="chat <message>", value="Oh Cmon Dude! Chat With Me!", inline=True)
+#   embed.set_footer(text=ctx.message.author)
 
-  await ctx.send(embed=embed)
+#   await ctx.send(embed=embed)
 
 
   
