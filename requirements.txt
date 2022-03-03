@@ -1,0 +1,4 @@
+chatbot-py==2.74
+discord==1.7.3
+python==3.8
+wikipedia==1.4.0
